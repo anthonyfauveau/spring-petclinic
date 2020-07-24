@@ -4,7 +4,7 @@ COPY .mvn /petclinic/.mvn
 COPY pom.xml /petclinic/pom.xl
 COPY mvnw /petclinic/mvnw
 RUN chmod +x mvnw
-RUN ./mvn dependency:go-offline
+RUN ./mvnw dependency:go-offline
 COPY src /petclinic/src
 RUN ./mvnw package -DskipTests
 
