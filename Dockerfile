@@ -1,7 +1,7 @@
 FROM openjdk:11.0.5-jdk-slim as BUILDER
 WORKDIR /petclinic
 COPY .mvn /petclinic/.mvn
-COPY pom.xml /petclinic/pom.xl
+COPY pom.xml /petclinic/pom.xml
 COPY mvnw /petclinic/mvnw
 RUN chmod +x mvnw
 RUN ./mvnw dependency:go-offline
