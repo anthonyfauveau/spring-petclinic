@@ -1,5 +1,14 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:11.0.5-jdk-slim as BUILDER
+WORKDIR /petclinic
+COPY .mvn /petclinic/.mvn
+COPY pom.xml /petclinic/pom.xl
+COPY mvnw /petclinic/mvnw
+RUN chmod +x mvnw
+RUN ./mvn dependency:go-offline
+COPY src /petclinic/src
+RUN ./mvnw package -DskipTests
+
+FROM openjdk:11-jre-slim
+COPY-- from=BUILDER /petclinic/target/*.jar /spring-petclinic.jar
 EXPOSE 8081
-ARG JAR_FILE=target/spring-petclinic-*.jar 
-ADD ${JAR_FILE} spring-petclinic.jar 
 ENTRYPOINT ["java","-jar","/spring-petclinic.jar"]
